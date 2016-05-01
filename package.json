@@ -1,0 +1,25 @@
+{
+  "name": "gulpsass",
+  "version": "1.0.0",
+  "description": "HTML and SASS template",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/markomitranic/ZentZent.git"
+  },
+  "author": "Marko Mitranic <marko.mitranic@gmail.com> (https://github.com/markomitranic)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/markomitranic/ZentZent/issues"
+  },
+  "homepage": "https://github.com/markomitranic/ZentZent#readme",
+  "devDependencies": {
+    "browser-sync": "^2.12.5",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-sass": "^2.3.1"
+  }
+}
