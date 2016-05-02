@@ -6,14 +6,21 @@ This is a very simple document startup template. We have gulp with sass set up. 
 The usage is fairly simple. `npm install` and later `gulp watch`.
 You'll get the hang of it. ;)
 
+## SASS Compiling Rules
+All SASS files need to be .scss and located within the scss folder. SASS will only be compiling two files (print.scss && style.scss) by default. This behavior is hardcoded in our gulpfile.js on line 1.
+
+It is easy to change this (read on), but generally we tend to use `@import` to include more files, as shown in the default style.scss.
+
+All compiled files will compile within the app/css directory, under the same filename. For example the default files will compile as app/css/style.css and app/css/print.css.
+
 ## Terms that apply
-- All SASS files need to be .scss and located within the scss folder. They will compile as app/css/style.css
 - All other files including JS and HTML are free to stay in the app folder.
-- Autoprefixer adds browser prefixes after compiling CSS.
-- On every save of every file, browser will be refreshed.
+- Generally, you will upload only the contents of the "app" folder to the server.
+- Autoprefixer adds browser prefixes only after compiling success of SCSS.
 - .gitignore is set up for OSX, Windows and Node.
-- Gulp Watch watches only for HTML, JS and SCSS files for reload. Manual page reload is allowed.
+- On every save of every file, browser will be refreshed.
+- There are limits as we watch only for HTML, JS and SCSS files for reload.
+- Manual page reload is needed for images directories and other.
 
 ## Gulpfile.js
-
 Gulpfile has not been modified much. Practically on line 1 you are offered an array of SCSS files to compile and that is all there is to it.
