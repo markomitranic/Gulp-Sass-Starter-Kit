@@ -3,7 +3,8 @@
 This is a very simple document startup template. We have gulp with sass set up. We also have autoprefixer and browserSync installed. There are no unnecessary packages and no meddling with your JS or images.
 
 ## Usage
-The usage is fairly simple. 'npm install' and later 'gulp watch'
+The usage is fairly simple. `npm install` and later `gulp watch`.
+You'll get the hang of it. ;)
 
 ## Terms that apply
 - All SASS files need to be .scss and located within the scss folder. They will compile as app/css/style.css
