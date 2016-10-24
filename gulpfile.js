@@ -9,14 +9,19 @@ var scssOutput = 'app/css';
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var browserSync = require('browser-sync').create();
+var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
 
 
 // Watch SASS.
 gulp.task('sass', function() {
-  return gulp.src(scssInput)
-    .pipe(sass())
-	.pipe(autoprefixer())
+  return gulp
+    .src(scssInput)
+    .pipe(sourcemaps.init())
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(sourcemaps.write())
+	  
     .pipe(gulp.dest(scssOutput))
     .pipe(browserSync.reload({
       stream: true
