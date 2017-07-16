@@ -1,45 +1,71 @@
-// The input SCSS files and the SCSS output path
-var scssInput = [
-	'scss/style.scss',
-	'scss/print.scss'
-	];
-var scssOutput = 'app/css';
+var scssInput = ['scss/style.scss'],
+    jsInput = [
+        'scripts/domain/*.js'
+    ],
+    vendorInput = [
+        'scripts/vendor/EasePack.min.js',
+        'scripts/vendor/rAF.js',
+        'scripts/vendor/TweenLite.min.js'
+    ],
+    scssOutput = 'app/css',
+    jsOutput = 'app/scripts';
 
 // Start everything up.
 var gulp = require('gulp');
 var sass = require('gulp-sass');
-var browserSync = require('browser-sync').create();
-var sourcemaps = require('gulp-sourcemaps');
 var autoprefixer = require('gulp-autoprefixer');
+var sourcemaps = require('gulp-sourcemaps');
+const babel = require('gulp-babel');
+var concat = require('gulp-concat');
+var rename = require('gulp-rename');
+var uglify = require('gulp-uglify');
+var browserSync = require('browser-sync').create();
 
 
 // Watch SASS.
 gulp.task('sass', function() {
-  return gulp
-    .src(scssInput)
-    .pipe(sourcemaps.init())
-    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
-    .pipe(autoprefixer())
-    .pipe(sourcemaps.write())
-	  
-    .pipe(gulp.dest(scssOutput))
-    .pipe(browserSync.reload({
-      stream: true
-    }))
+    return gulp
+        .src(scssInput)
+        .pipe(sourcemaps.init())
+        .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+        .pipe(autoprefixer())
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(scssOutput))
+        .pipe(browserSync.reload({
+            stream: true
+        }))
 });
 
-// Spin up server and reload.
+gulp.task('domainScripts', function() {
+    return gulp.src(jsInput)
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['env']
+        }))
+        .pipe(concat('scripts.js'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(jsOutput))
+        .pipe(rename('scripts.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest(jsOutput));
+});
+
+gulp.task('vendorScripts', function() {
+    return gulp.src(vendorInput)
+        .pipe(concat('vendor.js'))
+        .pipe(gulp.dest(jsOutput));
+});
+
 gulp.task('browserSync', function() {
-  browserSync.init({
-    server: {
-      baseDir: 'app'
-    },
-  })
+    browserSync.init({
+        server: {
+            baseDir: 'app'
+        },
+    })
 })
 
-
-gulp.task('watch', ['browserSync', 'sass'], function (){
-  gulp.watch('scss/**/*.scss', ['sass']); 
-  gulp.watch('app/*.html', browserSync.reload); 
-  gulp.watch('app/js/**/*.js', browserSync.reload); 
+gulp.task('watch', ['sass', 'domainScripts', 'vendorScripts', 'browserSync'], function (){
+    gulp.watch('scss/**/*.scss', ['sass', browserSync.reload]);
+    gulp.watch('scripts/domain/**/*.js', ['domainScripts', browserSync.reload]);
+    gulp.watch('scripts/vendor/**/*.js', ['vendorScripts', browserSync.reload]);
 });
