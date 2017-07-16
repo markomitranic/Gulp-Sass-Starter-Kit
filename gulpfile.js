@@ -43,10 +43,10 @@ gulp.task('domainScripts', function() {
             presets: ['env']
         }))
         .pipe(concat('scripts.js'))
-        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(jsOutput))
         .pipe(rename('scripts.min.js'))
-        .pipe(uglify())
+        .pipe(uglify()).on('error', sass.logError)
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest(jsOutput));
 });
 
