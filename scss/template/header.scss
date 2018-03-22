@@ -1,0 +1,15 @@
+header {
+	display: block;
+	width: 100vw;
+	min-height: 20px;
+	background-color: $light-blue;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: 10px 15px;
+
+	a#logo {
+		color: $white;
+		font-weight: 1000;
+	}
+}
